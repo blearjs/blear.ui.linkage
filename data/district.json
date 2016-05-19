@@ -1,0 +1,78 @@
+[
+  {
+    "text": "中国",
+    "value": "1",
+    "children": [
+      {
+        "text": "浙江省",
+        "value": "11",
+        "children": [
+          {
+            "text": "杭州市",
+            "value": "111"
+          },
+          {
+            "text": "宁波市",
+            "value": "112"
+          },
+          {
+            "text": "湖州市",
+            "value": "113"
+          }
+        ]
+      },
+      {
+        "text": "安徽省",
+        "value": "12",
+        "children": [
+          {
+            "text": "合肥市",
+            "value": "121"
+          },
+          {
+            "text": "黄山市",
+            "value": "122"
+          },
+          {
+            "text": "蚌埠市",
+            "value": "123"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "text": "其他",
+    "value": "2",
+    "children": [
+      {
+        "text": "America",
+        "value": "21",
+        "children": [
+          {
+            "text": "New York",
+            "value": "211"
+          },
+          {
+            "text": "WDC",
+            "value": "212"
+          }
+        ]
+      },
+      {
+        "text": "Germany",
+        "value": "22",
+        "children": [
+          {
+            "text": "Boorn",
+            "value": "221"
+          },
+          {
+            "text": "Lassxxm",
+            "value": "222"
+          }
+        ]
+      }
+    ]
+  }
+]
