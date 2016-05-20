@@ -1,7 +1,7 @@
 {
-  "name": "blear.classes.linkage",
-  "version": "1.0.1",
-  "description": "无限数据联动类",
+  "name": "blear.ui.linkage",
+  "version": "1.0.0",
+  "description": "无限数据联动 UI",
   "scripts": {
     "live": "browser-sync start --config bs-config.js",
     "test": "node ./node_modules/.bin/karma start karma.conf.js --single-run",
@@ -27,17 +27,17 @@
     "url": "http://ydr.me"
   },
   "contributors": [],
-  "homepage": "https://github.com/blearjs/blear.classes.linkage",
+  "homepage": "https://github.com/blearjs/blear.ui.linkage",
   "repository": {
     "type": "git",
-    "url": "https://github.com/blearjs/blear.classes.linkage"
+    "url": "https://github.com/blearjs/blear.ui.linkage"
   },
   "bugs": {
-    "url": "https://github.com/blearjs/blear.classes.linkage/issues"
+    "url": "https://github.com/blearjs/blear.ui.linkage/issues"
   },
   "dependencies": {},
   "peerDependencies": {
-    "blear.classes.events": "1.x",
+    "blear.ui": "1.x",
     "blear.utils.object": "1.x",
     "blear.utils.array": "1.x",
     "blear.utils.howdo": "1.x",

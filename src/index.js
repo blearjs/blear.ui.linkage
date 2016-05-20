@@ -14,7 +14,7 @@
 
 'use strict';
 
-var Events =   require('blear.classes.events');
+var UI =       require('blear.ui');
 var object =   require('blear.utils.object');
 var array =    require('blear.utils.array');
 var howdo =    require('blear.utils.howdo');
@@ -31,12 +31,12 @@ var defaults = {
     }
 };
 
-var Linkage = Events.extend({
+var Linkage = UI.extend({
     className: 'Linkage',
     constructor: function (options) {
         var the = this;
 
-        the.Super(the);
+        Linkage.parent(the);
         the[_options] = options = object.assign(true, {}, defaults, options);
         the[_selectEls] = selector.query(options.el);
         the[_value] = [];
@@ -93,7 +93,7 @@ var Linkage = Events.extend({
             event.un(el, 'change', the[_onChangeEvents][index]);
         });
 
-        the.Super.destroy();
+        Linkage.parent.destroy(the);
     }
 });
 var pro = Linkage.prototype;
