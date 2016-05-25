@@ -1,6 +1,6 @@
 {
   "name": "blear.ui.linkage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "无限数据联动 UI",
   "scripts": {
     "live": "browser-sync start --config bs-config.js",
@@ -16,7 +16,7 @@
   "main": "src/index.js",
   "keywords": [
     "blear",
-    "classes",
+    "ui",
     "linkage",
     "cloudcome",
     "ydr.me"
