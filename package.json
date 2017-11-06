@@ -1,6 +1,6 @@
 {
   "name": "blear.ui.linkage",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "无限数据联动 UI",
   "scripts": {
     "live": "browser-sync start --config bs-config.js",
