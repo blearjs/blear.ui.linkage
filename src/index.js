@@ -14,18 +14,19 @@
 
 'use strict';
 
-var UI =       require('blear.ui');
-var object =   require('blear.utils.object');
-var array =    require('blear.utils.array');
-var howdo =    require('blear.utils.howdo');
-var typeis =   require('blear.utils.typeis');
-var fun =      require('blear.utils.function');
+var UI = require('blear.ui');
+var object = require('blear.utils.object');
+var array = require('blear.utils.array');
+var plan = require('blear.utils.plan');
+var typeis = require('blear.utils.typeis');
+var fun = require('blear.utils.function');
 var selector = require('blear.core.selector');
-var event =    require('blear.core.event');
+var event = require('blear.core.event');
 
 var defaults = {
     el: 'select',
     placeholder: {
+        // 可以是动态函数 function(index){}
         text: '请选择',
         value: ''
     }
@@ -44,6 +45,7 @@ var Linkage = UI.extend({
         the.length = the[_selectEls].length;
         // 公开的 cache，便于继承对象重写
         the._cache = {};
+        the[_initPlaceholder]();
         the[_onChangeEvents] = [];
         the[_initChangeEvent]();
     },
@@ -97,17 +99,21 @@ var Linkage = UI.extend({
     }
 });
 var pro = Linkage.prototype;
-var _options = Linkage.sole();
-var _processing = Linkage.sole();
-var _selectEls = Linkage.sole();
-var _setValue = Linkage.sole();
-var _getData = Linkage.sole();
-var _value = Linkage.sole();
-var _renderHTML = Linkage.sole();
-var _renderSelect = Linkage.sole();
-var _onChangeEvents = Linkage.sole();
-var _initChangeEvent = Linkage.sole();
-var _resetToPlaceholder = Linkage.sole();
+var sole = Linkage.sole;
+var _options = sole();
+var _processing = sole();
+var _selectEls = sole();
+var _setValue = sole();
+var _getData = sole();
+var _value = sole();
+var _renderHTML = sole();
+var _renderSelect = sole();
+var _onChangeEvents = sole();
+var _initChangeEvent = sole();
+var _initPlaceholder = sole();
+var _placeholderList = sole();
+var _getPlaceholder = sole();
+var _resetToPlaceholder = sole();
 
 
 /**
@@ -136,19 +142,51 @@ pro[_initChangeEvent] = function () {
 
             var value = this.value;
             var then = index + 1;
+            var placeholder = the[_getPlaceholder](then);
 
             the[_value][index] = value;
 
-            while (then < the[_value].length) {
-                the[_value][then] = options.placeholder.value;
+            while (then < the.length) {
+                the[_value][then] = placeholder.value;
                 then++;
             }
 
-            the[_setValue](index, function () {
+            if (index === the.length - 1) {
+                return the.emit('change', the[_value]);
+            }
+
+            the[_setValue](index + 1, function () {
                 the.emit('change', the[_value]);
             });
         });
     });
+};
+
+
+/**
+ * 初始化 placeholder
+ */
+pro[_initPlaceholder] = function () {
+    var the = this;
+    var placeholder = the[_options].placeholder;
+    var rangeArr = array.range(1, the.length);
+    var placeholderText = placeholder.text;
+    var isFn = typeis.Function(placeholderText);
+
+    the[_placeholderList] = array.map(rangeArr, function (item) {
+        var o = {};
+        o.value = placeholder.value;
+        o.text = isFn ? placeholderText(item - 1) : placeholderText;
+        return o;
+    });
+};
+
+/**
+ * 获取 placeholder 默认值
+ * @returns {Function}
+ */
+pro[_getPlaceholder] = function (index) {
+    return this[_placeholderList][index];
 };
 
 
@@ -158,11 +196,10 @@ pro[_initChangeEvent] = function () {
  */
 pro[_resetToPlaceholder] = function (start) {
     var the = this;
-    var options = the[_options];
-    var html = the[_renderHTML](0, [options.placeholder], options.placeholder.value);
 
     while (start < the.length) {
-        the[_selectEls][start].innerHTML = html;
+        var placeholder = the[_getPlaceholder](start);
+        the[_selectEls][start].innerHTML = the[_renderHTML](start, [placeholder], placeholder.value);
         start++;
     }
 };
@@ -181,12 +218,12 @@ pro[_setValue] = function (start, callback) {
     }
 
     the[_resetToPlaceholder](start);
-    callback = fun.noop(callback);
+    callback = fun.ensure(callback);
     the[_processing] = true;
     the.emit('beforeProcess');
     var queue = new Array(the.length - start);
 
-    howdo
+    plan
         .each(queue, function (index, _, next) {
             index = index + start;
             var parent = the[_value][index - 1];
@@ -196,7 +233,7 @@ pro[_setValue] = function (start, callback) {
                 next();
             });
         })
-        .follow(function () {
+        .serial(function () {
             the[_processing] = false;
             the.emit('afterProcess');
             callback.call(the);
@@ -234,10 +271,20 @@ pro[_renderSelect] = function (index, list) {
     var the = this;
     var selectEl = the[_selectEls][index];
     var value = the[_value][index];
-    var options = the[_options];
-    var html = the[_renderHTML](index, [options.placeholder], value);
+    var placeholder = the[_getPlaceholder](index);
+    var html = the[_renderHTML](index, [placeholder], value);
 
     html += the[_renderHTML](index, list, value);
+
+    if (
+        /*前后变化一致*/
+    selectEl.innerHTML === html ||
+    /*只有一个 placeholder*/
+    list.length === 0 && selectEl.selectedOptions.length === 1
+    ) {
+        return;
+    }
+
     selectEl.innerHTML = html;
 };
 

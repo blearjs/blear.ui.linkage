@@ -8,10 +8,10 @@
 'use strict';
 
 var Linkage = require('../src/index.js');
-var howdo = require('blear.utils.howdo');
+var plan = require('blear.utils.plan');
 var collection = require('blear.utils.collection');
 var event = require('blear.core.event');
-var districtData= require('district.json', 'json');
+var districtData= require('district.json');
 
 
 describe('测试文件', function () {
@@ -76,7 +76,7 @@ describe('测试文件', function () {
             }, 1);
         };
 
-        howdo
+        plan
             .task(function (next) {
                 linkage.setValue([1, 11, 111], next);
                 linkage.setValue([1, 11, 111]);
@@ -123,6 +123,6 @@ describe('测试文件', function () {
                 document.body.removeChild(divEl);
                 delay(next);
             })
-            .follow(done);
+            .serial(done);
     }, 100000);
 });
