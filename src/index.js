@@ -98,7 +98,7 @@ var Linkage = UI.extend({
             event.un(el, 'change', the[_onChangeEvents][index]);
         });
 
-        Linkage.parent.destroy(the);
+        Linkage.invoke('destroy', the);
     }
 });
 var pro = Linkage.prototype;

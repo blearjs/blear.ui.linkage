@@ -2,11 +2,7 @@
   "name": "blear.ui.linkage",
   "version": "1.0.3",
   "description": "无限数据联动 UI",
-  "scripts": {
-    "live": "browser-sync start --config bs-config.js",
-    "test": "node ./node_modules/.bin/karma start karma.conf.js --single-run",
-    "prepublish": "npm test"
-  },
+  "scripts": {},
   "preferGlobal": false,
   "bin": {},
   "engines": {
@@ -38,7 +34,7 @@
   "dependencies": {
     "blear.core.event": "1.x",
     "blear.core.selector": "1.x",
-    "blear.ui": "1.x",
+    "blear.ui": "^1.0.8",
     "blear.utils.array": "1.x",
     "blear.utils.function": "^1.0.5",
     "blear.utils.object": "^1.0.14",
@@ -46,18 +42,6 @@
     "blear.utils.typeis": "1.x"
   },
   "peerDependencies": {},
-  "devDependencies": {
-    "blear.core.event": "1.x",
-    "blear.utils.collection": "1.x",
-    "blear.utils.plan": "^2.1.2",
-    "coolie.js": "^2.2.3",
-    "jasmine-core": "^2.4.1",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-coolie": "^2.0.1",
-    "karma-coverage": "^0.5.5",
-    "karma-coveralls": "^1.1.2",
-    "karma-jasmine": "^0.3.8"
-  },
+  "devDependencies": {},
   "license": "MIT"
 }
