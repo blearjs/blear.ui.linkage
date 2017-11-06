@@ -29,6 +29,9 @@ var defaults = {
         // 可以是动态函数 function(index){}
         text: '请选择',
         value: ''
+    },
+    getData: function (index, parent, next) {
+        next([]);
     }
 };
 
@@ -304,7 +307,8 @@ pro[_getData] = function (index, parent, callback) {
         return callback(list);
     }
 
-    the.emit('data', index, parent, function (list) {
+    the[_options].getData(index, parent, function (list) {
+        list = list || [];
         the._cache[id] = list;
         callback(list);
     });

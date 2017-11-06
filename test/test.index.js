@@ -25,7 +25,12 @@ describe('测试文件', function () {
         document.body.appendChild(divEl);
 
         var linkage = new Linkage({
-            el: '#' + divEl.id + ' select'
+            el: '#' + divEl.id + ' select',
+            getData: function (index, parent, next) {
+                setTimeout(function () {
+                    next(districtDataMap[parent || 0]);
+                }, 1);
+            }
         });
         var districtDataMap = {
             0: []
@@ -45,12 +50,6 @@ describe('测试文件', function () {
         });
 
         console.log(districtDataMap);
-
-        linkage.on('data', function (index, parent, next) {
-            setTimeout(function () {
-                next(districtDataMap[parent || 0]);
-            }, 1);
-        });
 
         linkage.on('beforeProcess', function () {
             var els = linkage.getElements();

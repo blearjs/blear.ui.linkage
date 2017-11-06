@@ -43,19 +43,18 @@ var linkage = new Linkage({
             return '请选择' + ['省份', '城市', '区域'][index];
         },
         value: ''
+    },
+    getData: function (index, parent, next) {
+        if (index && !parent) {
+            return next([]);
+        }
+
+        setTimeout(function () {
+            next(districtDataMap[parent || 0]);
+        }, 500);
     }
 });
 
-
-linkage.on('data', function (index, parent, next) {
-    if (index && !parent) {
-        return next([]);
-    }
-
-    setTimeout(function () {
-        next(districtDataMap[parent || 0]);
-    }, 500);
-});
 
 linkage.on('beforeProcess', function () {
     var els = linkage.getElements();
