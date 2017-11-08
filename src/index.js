@@ -47,7 +47,7 @@ var Linkage = UI.extend({
         the[_processing] = false;
         the.length = the[_selectEls].length;
         // 公开的 cache，便于继承对象重写
-        the._cache = {};
+        the.cache = {};
         the[_initPlaceholder]();
         the[_onChangeEvents] = [];
         the[_initChangeEvent]();
@@ -301,7 +301,7 @@ pro[_renderSelect] = function (index, list) {
 pro[_getData] = function (index, parent, callback) {
     var the = this;
     var id = [index, parent].join('ø');
-    var list = the._cache[id];
+    var list = the.cache[id];
 
     if (list) {
         return callback(list);
@@ -309,7 +309,7 @@ pro[_getData] = function (index, parent, callback) {
 
     the[_options].getData(index, parent, function (list) {
         list = list || [];
-        the._cache[id] = list;
+        the.cache[id] = list;
         callback(list);
     });
 };
